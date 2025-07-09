@@ -120,6 +120,7 @@ $riders = $stmt->fetchAll();
             <div class="dashboard-tabs">
                 <button class="tab-btn active" onclick="showTab('orders')">📦 Order Management</button>
                 <button class="tab-btn" onclick="showTab('completed')">✅ Completed Orders</button>
+                <button class="tab-btn" onclick="showTab('profile')">👤 Profile</button>
             </div>
             
             <!-- Orders Tab -->
@@ -150,7 +151,7 @@ $riders = $stmt->fetchAll();
                                     <td>
                                         <strong><?php echo htmlspecialchars($order['cust_username']); ?></strong><br>
                                         <small><?php echo htmlspecialchars($order['cust_phonenumber']); ?></small><br>
-                                        <small><?php echo htmlspecialchars($order['delivery_address'] ?? $order['cust_address']); ?></small>
+                                        <small>📍 <?php echo htmlspecialchars($order['delivery_address'] ?? $order['cust_address']); ?></small>
                                     </td>
                                     <td><?php echo htmlspecialchars($order['items']); ?></td>
                                     <td>
@@ -247,7 +248,7 @@ $riders = $stmt->fetchAll();
                                     <td>
                                         <strong><?php echo htmlspecialchars($order['cust_username']); ?></strong><br>
                                         <small><?php echo htmlspecialchars($order['cust_phonenumber']); ?></small><br>
-                                        <small><?php echo htmlspecialchars($order['delivery_address'] ?? $order['cust_address']); ?></small>
+                                        <small>📍 <?php echo htmlspecialchars($order['delivery_address'] ?? $order['cust_address']); ?></small>
                                     </td>
                                     <td><?php echo htmlspecialchars($order['items']); ?></td>
                                     <td>
@@ -273,6 +274,36 @@ $riders = $stmt->fetchAll();
                     </table>
                 </div>
             </div>
+            
+            <!-- Profile Tab -->
+            <div id="profile" class="tab-content">
+                <h2>👤 My Profile</h2>
+                <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    <form method="POST" id="staff-profile-form">
+                        <div class="form-group">
+                            <label for="staff_name">Staff Name</label>
+                            <input type="text" id="staff_name" name="staff_name" class="form-control" value="<?php echo htmlspecialchars($staff['staff_name']); ?>" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="staff_email">Email</label>
+                            <input type="email" id="staff_email" name="staff_email" class="form-control" value="<?php echo htmlspecialchars($staff['staff_email']); ?>" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="staff_phone">Phone Number</label>
+                            <input type="tel" id="staff_phone" name="staff_phone" class="form-control" value="<?php echo htmlspecialchars($staff['staff_phonenumber']); ?>" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="staff_password">New Password (leave blank to keep current)</label>
+                            <input type="password" id="staff_password" name="staff_password" class="form-control">
+                        </div>
+                        
+                        <button type="submit" name="update_profile" class="btn btn-primary" style="width: 100%;" onclick="return validateStaffProfile()">Update Profile</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -296,6 +327,27 @@ function viewPaymentProof(imagePath) {
 
 function closePaymentProof() {
     document.getElementById('payment-proof-modal').style.display = 'none';
+}
+
+// Staff profile validation function
+function validateStaffProfile() {
+    const name = document.getElementById('staff_name').value.trim();
+    const email = document.getElementById('staff_email').value.trim();
+    const phone = document.getElementById('staff_phone').value.trim();
+    
+    if (!name || !email || !phone) {
+        alert('Please fill in all required fields.');
+        return false;
+    }
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+    }
+    
+    return true;
 }
 
 // Close modal when clicking outside

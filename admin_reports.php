@@ -32,8 +32,9 @@ function calculateOrderDeliveryFee($total_qty) {
     } else if ($total_qty <= 8) {
         return 10.00;
     } else {
-        // For 9+ items: RM 15 base + RM 5 for each additional 5 items
-        $additionalGroups = floor(($total_qty - 9) / 5);
+        // For 9+ items: RM 15 base + RM 5 for each additional group of 5 items
+        $additionalItems = $total_qty - 9;
+        $additionalGroups = floor($additionalItems / 5);
         return 15.00 + ($additionalGroups * 5.00);
     }
 }

@@ -91,7 +91,8 @@ foreach ($today_orders as $order) {
     } else if ($order['total_qty'] <= 8) {
         $today_earnings += 10.00;
     } else {
-        $additionalGroups = floor(($order['total_qty'] - 9) / 5);
+        $additionalItems = $order['total_qty'] - 9;
+        $additionalGroups = floor($additionalItems / 5);
         $today_earnings += 15.00 + ($additionalGroups * 5.00);
     }
 }
@@ -110,7 +111,8 @@ foreach ($week_orders as $order) {
     } else if ($order['total_qty'] <= 8) {
         $week_earnings += 10.00;
     } else {
-        $additionalGroups = floor(($order['total_qty'] - 9) / 5);
+        $additionalItems = $order['total_qty'] - 9;
+        $additionalGroups = floor($additionalItems / 5);
         $week_earnings += 15.00 + ($additionalGroups * 5.00);
     }
 }
@@ -129,7 +131,8 @@ foreach ($month_orders as $order) {
     } else if ($order['total_qty'] <= 8) {
         $month_earnings += 10.00;
     } else {
-        $additionalGroups = floor(($order['total_qty'] - 9) / 5);
+        $additionalItems = $order['total_qty'] - 9;
+        $additionalGroups = floor($additionalItems / 5);
         $month_earnings += 15.00 + ($additionalGroups * 5.00);
     }
 }
@@ -149,7 +152,8 @@ foreach ($today_sales_orders as $order) {
     } else if ($order['total_qty'] <= 8) {
         $delivery_fee = 10.00;
     } else {
-        $additionalGroups = floor(($order['total_qty'] - 9) / 5);
+        $additionalItems = $order['total_qty'] - 9;
+        $additionalGroups = floor($additionalItems / 5);
         $delivery_fee = 15.00 + ($additionalGroups * 5.00);
     }
     $today_sales += ($order['total_price'] - $delivery_fee);
@@ -177,7 +181,8 @@ foreach ($payment_orders as $order) {
     } else if ($order['total_qty'] <= 8) {
         $delivery_fee = 10.00;
     } else {
-        $additionalGroups = floor(($order['total_qty'] - 9) / 5);
+        $additionalItems = $order['total_qty'] - 9;
+        $additionalGroups = floor($additionalItems / 5);
         $delivery_fee = 15.00 + ($additionalGroups * 5.00);
     }
     
@@ -217,7 +222,6 @@ $payment_breakdown = [
                 <div class="nav-actions">
                     <button class="btn btn-secondary" onclick="refreshPage()" style="margin-right: 1rem;">🔄 Refresh</button>
                     <a href="rider_reports.php" class="btn btn-secondary" style="margin-right: 1rem;">📊 Reports</a>
-                    <button class="btn btn-secondary" onclick="showTab('profile')" style="margin-right: 1rem;">👤 Profile</button>
                     <span>Welcome, <?php echo $_SESSION['username']; ?>!</span>
                     <a href="logout.php" class="btn btn-danger">Logout</a>
                 </div>
