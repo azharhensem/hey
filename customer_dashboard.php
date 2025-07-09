@@ -398,7 +398,15 @@ $categories = $stmt->fetchAll();
         <form method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="delivery_address">Delivery Address</label>
-                <textarea id="delivery_address" name="delivery_address" class="form-control" rows="3" required><?php echo htmlspecialchars($user['cust_address']); ?></textarea>
+                <div style="margin-bottom: 0.5rem;">
+                    <small style="color: #666; font-style: italic;">Format: [Street Number] [Street Name], [Area/District], [City], [Postal Code]</small>
+                </div>
+                <textarea id="delivery_address" name="delivery_address" class="form-control" rows="4" placeholder="Example: 123 Jalan Merdeka, Taman Sejahtera, Kuala Lumpur, 50000" required><?php echo htmlspecialchars($user['cust_address']); ?></textarea>
+                <div style="margin-top: 0.5rem;">
+                    <button type="button" class="btn" onclick="useDefaultAddress()" style="background: #6c757d; color: white; font-size: 0.875rem; padding: 0.5rem 1rem;">
+                        📍 Use My Default Address
+                    </button>
+                </div>
             </div>
             
             <div class="form-group">
@@ -447,12 +455,52 @@ alert('Order placed successfully! You can track your order in the home section.'
 alert('Profile updated successfully!');
 <?php endif; ?>
 
+<?php if (isset($_GET['error'])): ?>
+// Show error message
+alert('Error: <?php echo addslashes($_GET['error']); ?>');
+<?php endif; ?>
+
+// Use default address function
+function useDefaultAddress() {
+    const defaultAddress = `<?php echo addslashes($user['cust_address']); ?>`;
+    document.getElementById('delivery_address').value = defaultAddress;
+}
+
+// Address validation function
+function validateAddress(address) {
+    // Check if address follows the format: [Street] [Area] [City] [Postal]
+    const addressParts = address.split(',');
+    if (addressParts.length < 3) {
+        return false;
+    }
+    
+    // Check for postal code (5 digits)
+    const postalCodeRegex = /\b\d{5}\b/;
+    if (!postalCodeRegex.test(address)) {
+        return false;
+    }
+    
+    return true;
+}
+
 // Override checkout function to populate hidden fields
 function openModal(modalId) {
     if (modalId === 'checkout-modal') {
         const selectedItems = cart.filter(item => item.selected);
         if (selectedItems.length === 0) {
             alert('Please select items to checkout');
+            return;
+        }
+        
+        // Validate delivery address format
+        const deliveryAddress = document.getElementById('delivery_address').value.trim();
+        if (!deliveryAddress) {
+            alert('Please enter a delivery address');
+            return;
+        }
+        
+        if (!validateAddress(deliveryAddress)) {
+            alert('Please enter address in format: [Street Number] [Street Name], [Area/District], [City], [Postal Code]\n\nExample: 123 Jalan Merdeka, Taman Sejahtera, Kuala Lumpur, 50000');
             return;
         }
         
