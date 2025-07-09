@@ -189,25 +189,13 @@ function updateCartDisplay() {
     
     cartItemsContainer.innerHTML = cartHTML;
     
-    // Calculate dynamic delivery fee based on selected items quantity
-    const selectedItems = cart.filter(item => item.selected);
-    const totalQuantity = selectedItems.reduce((sum, item) => sum + item.quantity, 0);
-    let deliveryFee = 5.00; // Base fee for 1-4 items
-    if (totalQuantity > 8) {
-        deliveryFee = 15.00;
-    } else if (totalQuantity > 4) {
-        deliveryFee = 10.00;
-    }
-    
-    const total = subtotal + deliveryFee;
-    
-    if (cartSubtotal) cartSubtotal.textContent = `RM ${subtotal.toFixed(2)}`;
-    
-    // Calculate progressive delivery fee
+    // Calculate progressive delivery fee based on selected items quantity
     const selectedItems = cart.filter(item => item.selected);
     const totalQuantity = selectedItems.reduce((sum, item) => sum + item.quantity, 0);
     const deliveryFee = calculateDeliveryFee(totalQuantity);
     const total = subtotal + deliveryFee;
+    
+    if (cartSubtotal) cartSubtotal.textContent = `RM ${subtotal.toFixed(2)}`;
     
     // Update delivery fee display
     const deliveryFeeElement = document.getElementById('delivery-fee');
@@ -217,16 +205,26 @@ function updateCartDisplay() {
 }
 
 // Calculate progressive delivery fee based on quantity
-function calculateDeliveryFee(totalQuantity) {
-    if (totalQuantity <= 4) {
-        return 5.00;
-    } else if (totalQuantity <= 8) {
-        return 10.00;
-    } else {
-        // For 9+ items: RM 15 base + RM 5 for each additional 5 items
-        const additionalGroups = Math.floor((totalQuantity - 9) / 5);
-        return 15.00 + (additionalGroups * 5.00);
+// Profile validation function
+function validateProfile() {
+    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const address = document.getElementById('address').value.trim();
+    
+    if (!username || !email || !phone || !address) {
+        alert('Please fill in all required fields.');
+        return false;
     }
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+    }
+    
+    return true;
 }
 
 // Payment method toggle

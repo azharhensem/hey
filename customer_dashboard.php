@@ -353,7 +353,7 @@ $categories = $stmt->fetchAll();
             <div id="profile" class="tab-content">
                 <h2>👤 My Profile</h2>
                 <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-                    <form method="POST" action="update_profile.php">
+                    <form method="POST" action="update_profile.php" id="profile-form">
                         <div class="form-group">
                             <label for="username">Username</label>
                             <input type="text" id="username" name="username" class="form-control" value="<?php echo htmlspecialchars($user['cust_username']); ?>" required>
@@ -379,7 +379,7 @@ $categories = $stmt->fetchAll();
                             <input type="password" id="new_password" name="new_password" class="form-control">
                         </div>
                         
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Update Profile</button>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;" onclick="return validateProfile()">Update Profile</button>
                     </form>
                 </div>
             </div>
