@@ -18,11 +18,24 @@ if (isset($_POST['checkout'])) {
     
     $_SESSION['last_checkout_time'] = time();
     
-    $address = $_POST['delivery_address'];
+    $address = trim($_POST['delivery_address']);
     $payment_method = $_POST['payment_method'];
     $cart_items = json_decode($_POST['cart_items'], true);
     $total_price = $_POST['total_price'];
     $payment_proof = null;
+    
+    // Validate delivery address format
+    if (empty($address)) {
+        echo "<script>alert('Delivery address is required.'); history.back();</script>";
+        exit;
+    }
+    
+    // Basic address format validation
+    $address_parts = explode(',', $address);
+    if (count($address_parts) < 3 || !preg_match('/\b\d{5}\b/', $address)) {
+        echo "<script>alert('Please enter address in correct format: [Street Number] [Street Name], [Area/District], [City], [Postal Code]'); history.back();</script>";
+        exit;
+    }
     
     // Total price already includes delivery fee from frontend calculation
     $total_price = floatval($total_price);

@@ -184,6 +184,7 @@ $categories = $stmt->fetchAll();
                 <div class="nav-actions">
                     <button class="btn btn-secondary" onclick="refreshPage()" style="margin-right: 1rem;">🔄 Refresh</button>
                     <a href="admin_reports.php" class="btn btn-secondary" style="margin-right: 1rem;">📊 Reports</a>
+                    <a href="address_tracking_report.php" class="btn btn-secondary" style="margin-right: 1rem;">📍 Address Tracking</a>
                     <span>Welcome, <?php echo $_SESSION['username']; ?>!</span>
                     <a href="logout.php" class="btn btn-danger">Logout</a>
                 </div>

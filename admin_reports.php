@@ -189,6 +189,32 @@ $avg_order_value = $stmt->fetch()['avg_value'];
                     <p style="font-size: 2rem; font-weight: 600;"><?php echo $rider_count; ?></p>
                 </div>
             </div>
+            
+            <!-- Address Tracking Summary -->
+            <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 2rem;">
+                <h3 style="color: #8B4513; margin-bottom: 1rem;">📍 Address Tracking Summary</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                    <?php
+                    $custom_address_count = 0;
+                    $default_address_count = 0;
+                    foreach ($recent_orders as $order) {
+                        if (!empty($order['delivery_address']) && $order['delivery_address'] !== $order['cust_address']) {
+                            $custom_address_count++;
+                        } else {
+                            $default_address_count++;
+                        }
+                    }
+                    ?>
+                    <div style="text-align: center; padding: 1rem; background: #e8f5e8; border-radius: 8px;">
+                        <h4 style="color: #155724; margin-bottom: 0.5rem;">Custom Addresses</h4>
+                        <p style="font-size: 1.5rem; font-weight: 600; color: #155724; margin: 0;"><?php echo $custom_address_count; ?></p>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: #fff3cd; border-radius: 8px;">
+                        <h4 style="color: #856404; margin-bottom: 0.5rem;">Default Addresses</h4>
+                        <p style="font-size: 1.5rem; font-weight: 600; color: #856404; margin: 0;"><?php echo $default_address_count; ?></p>
+                    </div>
+                </div>
+            </div>
 
             <!-- Charts Grid -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem;">

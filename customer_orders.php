@@ -121,7 +121,19 @@ $orders = $stmt->fetchAll();
                             </div>
                             
                             <?php if ($order['delivery_address']): ?>
-                                <p><strong>📍 Delivery Address:</strong> <?php echo htmlspecialchars($order['delivery_address']); ?></p>
+                                <div style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #28a745;">
+                                    <p style="margin: 0;"><strong style="color: #155724;">📍 Delivery Address:</strong></p>
+                                    <p style="margin: 0.5rem 0 0 0; color: #155724; font-weight: 500;">
+                                        <?php echo htmlspecialchars($order['delivery_address']); ?>
+                                    </p>
+                                </div>
+                            <?php elseif ($order['cust_address']): ?>
+                                <div style="margin-top: 1rem; padding: 1rem; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107;">
+                                    <p style="margin: 0;"><strong style="color: #856404;">📍 Default Address Used:</strong></p>
+                                    <p style="margin: 0.5rem 0 0 0; color: #856404; font-weight: 500;">
+                                        <?php echo htmlspecialchars($order['cust_address']); ?>
+                                    </p>
+                                </div>
                             <?php endif; ?>
                             
                             <div class="status-timeline">

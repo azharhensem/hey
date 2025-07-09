@@ -205,6 +205,19 @@ function updateCartDisplay() {
 }
 
 // Calculate progressive delivery fee based on quantity
+function calculateDeliveryFee(totalQuantity) {
+    if (totalQuantity <= 4) {
+        return 5.00;
+    } else if (totalQuantity <= 8) {
+        return 10.00;
+    } else {
+        // For 9+ items: RM 15 base + RM 5 for each additional group of 5 items
+        const additionalItems = totalQuantity - 9;
+        const additionalGroups = Math.floor(additionalItems / 5);
+        return 15.00 + (additionalGroups * 5.00);
+    }
+}
+
 // Profile validation function
 function validateProfile() {
     const username = document.getElementById('username').value.trim();

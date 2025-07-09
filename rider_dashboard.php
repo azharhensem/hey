@@ -491,7 +491,7 @@ $payment_breakdown = [
                                             <td><?php echo date('M d, Y', strtotime($order['order_date'])); ?></td>
                                             <td>
                                                 <strong><?php echo htmlspecialchars($order['cust_username']); ?></strong><br>
-                                                <small>📍 <?php echo htmlspecialchars(substr($order['cust_address'], 0, 30)) . (strlen($order['cust_address']) > 30 ? '...' : ''); ?></small>
+                                                <small>📍 <?php echo htmlspecialchars(substr($order['delivery_address'] ?? $order['cust_address'], 0, 30)) . (strlen($order['delivery_address'] ?? $order['cust_address']) > 30 ? '...' : ''); ?></small>
                                             </td>
                                             <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                                 <?php echo htmlspecialchars($order['items']); ?>

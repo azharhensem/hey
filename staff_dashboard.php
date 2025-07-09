@@ -151,7 +151,10 @@ $riders = $stmt->fetchAll();
                                     <td>
                                         <strong><?php echo htmlspecialchars($order['cust_username']); ?></strong><br>
                                         <small><?php echo htmlspecialchars($order['cust_phonenumber']); ?></small><br>
-                                        <small>📍 <?php echo htmlspecialchars($order['delivery_address'] ?? $order['cust_address']); ?></small>
+                                        <small style="color: #28a745; font-weight: 500;">📍 Delivery Address:</small><br>
+                                        <small style="background: #f8f9fa; padding: 0.25rem 0.5rem; border-radius: 4px; display: inline-block; margin-top: 0.25rem; border-left: 3px solid #28a745;">
+                                            <?php echo htmlspecialchars($order['delivery_address'] ?? $order['cust_address']); ?>
+                                        </small>
                                     </td>
                                     <td><?php echo htmlspecialchars($order['items']); ?></td>
                                     <td>
